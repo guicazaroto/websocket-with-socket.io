@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WebSocket</title>
+</head>
+<body>
+  <h1>WebSocket</h1>
+  <div id="msg"></div>
+  <div id="msg2"></div>
+  <div id="msg3"></div>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const msg = document.querySelector('#msg');
+    const msg2 = document.querySelector('#msg2');
+    const msg3 = document.querySelector('#msg3');
+
+    //evento executado quando a conexao é aberta com o servidor
+    socket.on('connect', function() {
+      msg.innerHTML = `<p>Client id: ${socket.id} </p>`
+
+      //comando usado para passar um mensagem para o servidor
+      socket.emit('mensagem', 'Eu estou conectado com o id: ') //dataId , Data
+    })
+
+    socket.on('msg', function(msg){
+      msg2.innerHTML = `<p>msg vinda do server: ${msg} </p>`
+    })
+
+    socket.on('all users', function(msg){
+      msg3.innerHTML = `<p>msg vinda do server: ${msg} </p>`
+    });
+
+  </script>
+</body>
+</html>
